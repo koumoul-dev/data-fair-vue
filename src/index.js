@@ -28,6 +28,19 @@ export const dataFairStore = {
     },
     setRemoteService(state, {key, remoteService}) {
       Vue.set(state.remoteServices, key, remoteService)
+    },
+    setConfig(state, appConfig) {
+      for (let datasetRef of appConfig.datasets) {
+        if (state.datasets[datasetRef.key] && state.datasets[datasetRef.key].href !== datasetRef.href) {
+          delete state.datasets[datasetRef.key]
+        }
+      }
+      for (let remoteServiceRef of appConfig.remoteServices) {
+        if (state.remoteServices[remoteServiceRef.key] && state.remoteServices[remoteServiceRef.key].href !== remoteServiceRef.href) {
+          delete state.remoteServices[remoteServiceRef.key]
+        }
+      }
+      state.appConfig = appConfig
     }
   },
   actions: {
@@ -71,7 +84,7 @@ export const dataFairStore = {
         const appConfig = await this.$axios.$get(`/applications/${state.dataFairConfig.applicationId}/configuration`)
         appConfig.datasets = appConfig.datasets || []
         appConfig.remoteServices = appConfig.remoteServices || []
-        commit('setAny', {appConfig})
+        commit('setConfig', appConfig)
       } catch (error) {
         dispatch('notif', {error, msg: `Erreur pendant la récupération de la configuration de l'application`})
       }
@@ -79,7 +92,7 @@ export const dataFairStore = {
     async saveAppConfig({state, commit, dispatch}, appConfig) {
       try {
         await this.$axios.$put(`/applications/${state.dataFairConfig.applicationId}/configuration`, appConfig)
-        commit('setAny', {appConfig})
+        commit('setConfig', appConfig)
         dispatch('notif', {msg: `La configuration de l'application est enregistrée`})
       } catch (error) {
         dispatch('notif', {error, msg: `Erreur pendant l'enregistrement de la configuration de l'application`})
@@ -87,6 +100,7 @@ export const dataFairStore = {
     },
     async fetchDatasets({state, commit, dispatch}) {
       for (let datasetRef of state.appConfig.datasets) {
+        if (state.datasets[datasetRef.key] && state.datasets[datasetRef.key].href === datasetRef.href) return
         try {
           commit('setDataset', {key: datasetRef.key, dataset: await this.$axios.$get(datasetRef.href)})
         } catch (error) {
@@ -96,6 +110,7 @@ export const dataFairStore = {
     },
     async fetchRemoteServices({state, commit, dispatch}) {
       for (let remoteServiceRef of state.appConfig.remoteServices) {
+        if (state.remoteServices[remoteServiceRef.key] && state.remoteServices[remoteServiceRef.key].href === remoteServiceRef.href) return
         try {
           commit('setRemoteService', {key: remoteServiceRef.key, remoteService: await this.$axios.$get(remoteServiceRef.href)})
         } catch (error) {
