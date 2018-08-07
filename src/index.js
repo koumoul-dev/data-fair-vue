@@ -87,7 +87,6 @@ export const dataFairStore = {
     },
     async fetchDatasets({state, commit, dispatch}) {
       for (let datasetRef of state.appConfig.datasets) {
-        console.log('FETCH ', datasetRef)
         try {
           commit('setDataset', {key: datasetRef.key, dataset: await this.$axios.$get(datasetRef.href)})
         } catch (error) {
