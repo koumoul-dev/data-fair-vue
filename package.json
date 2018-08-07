@@ -1,0 +1,39 @@
+{
+  "name": "@koumoul/data-fair-vue",
+  "version": "0.0.0",
+  "description": "Tools to manage a session from simple-directory in a vuejs project. Also a recipe/demo in ./demo/",
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "eslint --ext js,vue --ignore-path .gitignore .",
+    "build": "webpack --mode production",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koumoul-dev/data-fair-vue.git"
+  },
+  "author": "Alban Mouton <alban.mouton@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/koumoul-dev/data-fair-vue/issues"
+  },
+  "homepage": "https://github.com/koumoul-dev/data-fair-vue#readme",
+  "dependencies": {
+    "js-cookie": "^2.2.0",
+    "jwt-decode": "^2.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.54",
+    "@babel/core": "^7.0.0-beta.54",
+    "@babel/preset-env": "^7.0.0-beta.54",
+    "babel-loader": "^8.0.0-beta",
+    "eslint": "^4.18.2",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "webpack": "^4.12.2",
+    "webpack-cli": "^3.0.8"
+  }
+}
