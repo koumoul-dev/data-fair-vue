@@ -85,6 +85,8 @@ export const dataFairStore = {
         appConfig.datasets = appConfig.datasets || []
         appConfig.remoteServices = appConfig.remoteServices || []
         commit('setConfig', appConfig)
+        dispatch('fetchDatasets')
+        dispatch('fetchRemoteServices')
       } catch (error) {
         dispatch('notif', {error, msg: `Erreur pendant la récupération de la configuration de l'application`})
       }
@@ -93,6 +95,8 @@ export const dataFairStore = {
       try {
         await this.$axios.$put(`/applications/${state.dataFairConfig.applicationId}/configuration`, appConfig)
         commit('setConfig', appConfig)
+        dispatch('fetchDatasets')
+        dispatch('fetchRemoteServices')
         dispatch('notif', {msg: `La configuration de l'application est enregistrée`})
       } catch (error) {
         dispatch('notif', {error, msg: `Erreur pendant l'enregistrement de la configuration de l'application`})
