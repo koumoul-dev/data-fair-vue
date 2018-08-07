@@ -1,6 +1,6 @@
 {
   "name": "@koumoul/data-fair-vue",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Tools to manage a session from simple-directory in a vuejs project. Also a recipe/demo in ./demo/",
   "main": "dist/index.js",
   "scripts": {
